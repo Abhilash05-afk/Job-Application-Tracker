@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JobTrack</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <header>
+        <div>
+            <h1>JobTrack</h1>
+            <p>Job Application Tracker</p>
+        </div>
+
+        <button onclick="showForm()">+ Add Application</button>
+    </header>
+
+
+    <main>
+
+        <!-- Dashboard -->
+
+        <section class="dashboard">
+
+            <div class="card">
+                <h3>Total Applications</h3>
+                <p id="total">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Applied</h3>
+                <p id="applied">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Interviews</h3>
+                <p id="interviews">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Offers</h3>
+                <p id="offers">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Rejected</h3>
+                <p id="rejected">0</p>
+            </div>
+
+        </section>
+
+
+        <!-- Add Application Form -->
+
+        <section id="form-section" class="form-section hidden">
+
+            <h2>Add Job Application</h2>
+
+            <form id="job-form">
+
+                <input id="company" placeholder="Company" required>
+
+                <input id="job_title" placeholder="Job Title" required>
+
+                <input id="application_date"
+                       type="date"
+                       required>
+
+                <select id="status">
+
+                    <option value="Applied">Applied</option>
+
+                    <option value="Screening">Screening</option>
+
+                    <option value="Interview">Interview</option>
+
+                    <option value="Offer">Offer</option>
+
+                    <option value="Rejected">Rejected</option>
+
+                </select>
+
+                <input id="job_url"
+                       placeholder="Job URL">
+
+                <textarea id="notes"
+                          placeholder="Notes"></textarea>
+
+                <div>
+                    <button type="submit">Save Application</button>
+
+                    <button type="button"
+                            onclick="hideForm()">
+                        Cancel
+                    </button>
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- Applications -->
+
+        <section>
+
+            <h2>Applications</h2>
+
+            <div id="jobs-container"></div>
+
+        </section>
+
+    </main>
+
+
+<script>
+
+async function loadJobs() {
+
+    const response = await fetch("/jobs");
+
+    const jobs = await response.json();
+
+    const container = document.getElementById("jobs-container");
+
+    container.innerHTML = "";
+
+    document.getElementById("total").textContent = jobs.length;
+
+    document.getElementById("applied").textContent =
+        jobs.filter(job => job.status === "Applied").length;
+
+    document.getElementById("interviews").textContent =
+        jobs.filter(job => job.status === "Interview").length;
+
+    document.getElementById("offers").textContent =
+        jobs.filter(job => job.status === "Offer").length;
+
+    document.getElementById("rejected").textContent =
+        jobs.filter(job => job.status === "Rejected").length;
+
+
+    jobs.forEach(job => {
+
+        const card = document.createElement("div");
+
+        card.className = "job-card";
+
+        card.innerHTML = `
+
+            <div>
+
+                <h3>${job.company}</h3>
+
+                <p>${job.job_title}</p>
+
+                <small>
+                    Applied: ${job.application_date}
+                </small>
+
+            </div>
+
+            <div>
+
+                <span class="status">
+                    ${job.status}
+                </span>
+
+                <a href="${job.job_url}"
+                   target="_blank">
+                   Job Link
+                </a>
+
+                <button onclick="deleteJob(${job.id})">
+                    Delete
+                </button>
+
+            </div>
+        `;
+
+        container.appendChild(card);
+
+    });
+}
+
+
+document.getElementById("job-form")
+.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const job = {
+
+        company:
+            document.getElementById("company").value,
+
+        job_title:
+            document.getElementById("job_title").value,
+
+        application_date:
+            document.getElementById("application_date").value,
+
+        status:
+            document.getElementById("status").value,
+
+        job_url:
+            document.getElementById("job_url").value,
+
+        notes:
+            document.getElementById("notes").value
+    };
+
+
+    await fetch("/jobs", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(job)
+
+    });
+
+
+    document.getElementById("job-form").reset();
+
+    hideForm();
+
+    loadJobs();
+
+});
+
+
+async function deleteJob(id) {
+
+    await fetch(`/jobs/${id}`, {
+
+        method: "DELETE"
+
+    });
+
+    loadJobs();
+
+}
+
+
+function showForm() {
+
+    document
+        .getElementById("form-section")
+        .classList.remove("hidden");
+
+}
+
+
+function hideForm() {
+
+    document
+        .getElementById("form-section")
+        .classList.add("hidden");
+
+}
+
+
+loadJobs();
+
+</script>
+
+</body>
+</html>
