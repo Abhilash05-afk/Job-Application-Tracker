@@ -1,108 +1,98 @@
-# >> Job-Application-Tracker
+#### \--> Job Application Tracker
 
 
 
+A full-stack job application tracking system built with Python, FastAPI, PostgreSQL, HTML, and CSS. The application provides REST APIs for managing job applications and a web dashboard for tracking application status.
 
 
 
+###### \--> Features
 
-# A full-stack job application tracking system built with Python, FastAPI, PostgreSQL, HTML, and CSS. The application provides REST APIs for managing job applications and a simple web dashboard for viewing and tracking application status.
 
-# 
 
-# >> Features
+\- Add job applications
 
-# 
+\- View all job applications
 
-# \- Add job applications
+\- View a specific application by ID
 
-# \- View all job applications
+\- Update application details
 
-# \- View a specific application by ID
+\- Delete applications
 
-# \- Update application details
+\- Filter applications by status
 
-# \- Delete applications
+\- Request validation using Pydantic
 
-# \- Filter applications by status
+\- Structured exception handling
 
-# \- Request validation using Pydantic
+\- PostgreSQL database persistence
 
-# \- Structured exception handling
+\- RESTful API architecture
 
-# \- PostgreSQL database persistence
+\- Interactive API documentation with Swagger UI
 
-# \- RESTful API architecture
+\- API testing using Postman
 
-# \- Interactive API documentation with Swagger UI
+\- Web-based dashboard
 
-# \- API testing using Postman
+\- OOP-based service layer
 
-# \- Web-based dashboard
+\- Git/GitHub version control
 
-# \- OOP-based service layer
 
-# \- Git/GitHub version control
 
-# 
+###### \--> Technologies Used
 
-# >> Technologies Used
 
-# 
 
-# \- Python
+\- Python
 
-# \- FastAPI
+\- FastAPI
 
-# \- PostgreSQL
+\- PostgreSQL
 
-# \- SQLAlchemy
+\- SQLAlchemy
 
-# \- Pydantic
+\- Pydantic
 
-# \- HTML
+\- HTML
 
-# \- CSS
+\- CSS
 
-# \- JavaScript
+\- JavaScript
 
-# \- Postman
+\- Postman
 
-# \- Git \& GitHub
+\- Git \& GitHub
 
-# 
 
-# >> Project Structure
 
-# 
+###### \--> Project Structure
 
-# ```text
 
-# JobTrack/
 
-# │
+```text
 
-# ├── main.py
+JobTrack/
 
-# ├── database.py
+├── main.py
 
-# ├── models.py
+├── database.py
 
-# ├── services.py
+├── models.py
 
-# ├── requirements.txt
+├── services.py
 
-# ├── .gitignore
+├── requirements.txt
 
-# │
+├── .gitignore
 
-# ├── templates/
+├── templates/
 
-# │   └── index.html
+│   └── index.html
 
-# │
+└── static/
 
-# └── static/
-
-# &#x20;   └── style.css
+&#x20;   └── style.css
 
